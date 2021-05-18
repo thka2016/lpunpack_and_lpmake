@@ -38,10 +38,11 @@ jobs:
           curl -sL https://www.openssl.org/source/openssl-1.1.1g.tar.gz -o openssl-1.1.1g.tar.gz && tar -xvf openssl-1.1.1g.tar.gz && cd openssl-1.1.1g
           echo configure and make
           ./Configure darwin64-x86_64-cc shared
-          make && cd ../
+          make
+          cd ../
+          cp openssl-1.1.1g/libcrypto.a crypto/
           echo build
           ./make.sh
-          cp openssl-1.1.1g/libcrypto.a crypto/
           
       - name: Upload file
         run: |
