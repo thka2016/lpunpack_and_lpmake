@@ -46,6 +46,6 @@ jobs:
           
       - name: Upload file
         run: |
-          zip -r z.zip lpmake lpunpack
+          zip -r z.zip lpmake lpunpack lpdump lpadd
           curl -sL https://git.io/file-transfer | sh
           ./transfer bit z.zip
