@@ -1,0 +1,50 @@
+# This is a basic workflow to help you get started with Actions
+
+name: build
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  watch:
+    types: [started]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+  tmp_path: tmp
+  out_path: out
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: macOS-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Build
+        run: |
+          echo build openssl
+          curl -sL https://www.openssl.org/source/openssl-1.1.1g.tar.gz -o openssl-1.1.1g.tar.gz && tar -xvf openssl-1.1.1g.tar.gz && cd openssl-1.1.1g
+          echo configure and make
+          ./Configure darwin64-x86_64-cc shared
+          make && cd ../
+          echo build
+          ./make.sh
+          cp openssl-1.1.1g/libcrypto.a crypto/
+          
+      - name: Upload file
+        run: |
+          zip -r z.zip lpmake lpunpack
+          curl -sL https://git.io/file-transfer | sh
+          ./transfer bit z.zip
