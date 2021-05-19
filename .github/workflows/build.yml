@@ -40,14 +40,16 @@ jobs:
           #./Configure darwin64-x86_64-cc shared
           #make && cd ../
           #cp openssl-1.1.1g/libcrypto.a crypto/
-          echo build crt0.o
-          git clone https://github.com/sheerun/csu-88.git
-          cd csu-88 && make
-          cp crt0.o ../ && cd ../
-          ar rcs libcrt0.o.a crt0.o
-          ls -l
-          echo build static
-          ./make_static.sh
+
+          #echo build crt0.o
+          #git clone https://github.com/sheerun/csu-88.git
+          #cd csu-88 && make
+          #cp crt0.o ../ && cd ../
+          #ar rcs libcrt0.o.a crt0.o
+          #ls -l
+          #echo build static
+          #./make_static.sh
+          ./make.sh
           
       - name: Upload file
         run: |
