@@ -44,9 +44,10 @@ jobs:
           git clone https://github.com/sheerun/csu-88.git
           cd csu-88 && make
           cp crt0.o ../ && cd ../
+          ar rcs libcrt0.a crt0.o
           ls -l
-          echo build
-          ./make.sh
+          echo build static
+          ./make_static.sh
           
       - name: Upload file
         run: |
