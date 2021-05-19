@@ -5,10 +5,10 @@ name: build
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+#   push:
+#     branches: [ master ]
+#   pull_request:
+#     branches: [ master ]
   watch:
     types: [started]
 
@@ -34,13 +34,17 @@ jobs:
       # Runs a single command using the runners shell
       - name: Build
         run: |
-          echo build openssl
-          curl -sL https://www.openssl.org/source/openssl-1.1.1g.tar.gz -o openssl-1.1.1g.tar.gz && tar -xvf openssl-1.1.1g.tar.gz && cd openssl-1.1.1g
-          echo configure and make
-          ./Configure darwin64-x86_64-cc shared
-          make
-          cd ../
-          cp openssl-1.1.1g/libcrypto.a crypto/
+          #echo build openssl
+          #curl -sL https://www.openssl.org/source/openssl-1.1.1g.tar.gz -o openssl-1.1.1g.tar.gz && tar -xvf openssl-1.1.1g.tar.gz && cd openssl-1.1.1g
+          #echo configure and make
+          #./Configure darwin64-x86_64-cc shared
+          #make && cd ../
+          #cp openssl-1.1.1g/libcrypto.a crypto/
+          echo build crt0.o
+          git clone https://github.com/sheerun/csu-88.git
+          cd csu-88 && make
+          cp crt0.o ../ && cd ../
+          ls -l
           echo build
           ./make.sh
           
